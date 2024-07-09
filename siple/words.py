@@ -24,12 +24,12 @@ class WordType(Enum):
 
 class Word:
     """
-    A class to represent a word.
+    A class to represent a word. Word trees can be created using the add method.
     
-    text     : str      - the text of the word.
-    vector   : vector   - the vector representation of the word.
-    childern : list     - list of child words related to this word.
-    type     : WordType - the type of the word.
+    - text     : str      - the text of the word.
+    - vector   : vector   - the vector representation of the word.
+    - childern : list     - list of child words related to this word.
+    - type     : WordType - the type of the word.
     """
     def __init__(self, text:str, type:WordType = WordType.UNKNOWN):
         self.text = text.lower()
@@ -97,14 +97,12 @@ class Words:
         self._recalculateVectors()
         
     def model(self) -> Model:
-        """Get the NLP Model used.
-
-        Returns:
-            NLPModel: The NLP Model used.
+        """Returns the NLP Model used.
         """
         return self.__model
 
     def clear(self):
+        """Remove all words"""
         self.list = []
         self.vectors = []
         self.map = {}
@@ -146,46 +144,27 @@ class Words:
         self.vectors.append(item.vector)
         self.map[item.text] = item        
                         
-    def wordWithText(self, text:str):
-        """Return the Word object which matched the given text.
-
-        Args:
-            text (string): The text of the Word to be searched for.
-
-        Returns:
-            Word: The word object if found, None otherwise.
+    def wordWithText(self, text:str) -> Word:
+        """Return the Word object which matches the given text.
         """
         return self.map.get(text.lower(), None)
     
-    def wordsClosestTo(self, text:str, threshold=0.3):
+    def wordsClosestTo(self, text:str, threshold=0.3) -> list:
         """
         Returns a list of words that are similar to the given text.
-        The list is ordered by similarity score in descending order.
-         
-
-        Args:
-            text (string): text of word to be searched for.
-            threshold (float, optional): Similarity threshold. Defaults to 0.3.
-
-        Returns:
-            [ (word, similarity), ... )]: Array of tuples containing the word object and the similarity score.
+        - The list is ordered by similarity score in descending order.
+        - Similarity scores lower than the threshold are excluded.
         """
         if self.__model is None:
             return []
         vector = text if self.__model.isVector(text) else self.__model.wordVector(text)
         return self.wordsClosestToVector(vector, threshold)
                         
-    def wordsClosestToVector(self, vector, threshold=0.3):
+    def wordsClosestToVector(self, vector, threshold=0.3) -> list:
         """
         Returns a list of words that are similar to the given vector.
-        The list is ordered by similarity score in descending order.
-         
-        Args:
-            vector (Model vector): text of word to be searched for.
-            threshold (float, optional): Similarity threshold. Defaults to 0.3.
-
-        Returns:
-            [ (word, similarity), ... )]: Array of tuples containing the word object and the similarity score.
+        - The list is ordered by similarity score in descending order.
+        - Similarity scores lower than the threshold are excluded.
         """
         
         # check if model is available
