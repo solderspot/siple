@@ -5,9 +5,9 @@ setup(
     version='0.1.0',
     packages=find_packages(),
     install_requires=[
-        'spacy',
-        'numpy',
-        'scikit-learn',
+        'spacy>=3.7.5,<4.0.0',
+        'numpy>=1.26.4,<2.0.0',
+        'scikit-learn>=1.5.1,<2.0.0',
     ],
     description='A command/action parsing library/framework for use in traditional texted based games.',
     author='Tom Rolfs',
