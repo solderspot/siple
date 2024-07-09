@@ -370,7 +370,7 @@ class TestParser(unittest.TestCase):
             if result:
                 return result
 
-    def test_cases(self):
+    def test_parser(self):
         for sentence, expected in test_data:
             words = self.parser.parse(sentence)
             for text, type, children in expected:
