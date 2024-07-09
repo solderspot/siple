@@ -61,6 +61,10 @@ class TestWord(unittest.TestCase):
         word = Word('test', WordType.PREPOSITION)
         self.assertEqual(word.type, WordType.PREPOSITION)
         self.assertEqual(str(word.type), 'prep')
+
+        word = Word('test', WordType.PARTICLE)
+        self.assertEqual(word.type, WordType.PARTICLE)
+        self.assertEqual(str(word.type), 'part')
         
         word = Word('test')
         self.assertEqual(word.type, WordType.UNKNOWN)
@@ -73,6 +77,7 @@ class TestWord(unittest.TestCase):
         self.assertEqual(WordType.from_string('prep'), WordType.PREPOSITION)
         self.assertEqual(WordType.from_string('unkn'), WordType.UNKNOWN)
         self.assertEqual(WordType.from_string('sdfsdfsdf'), WordType.UNKNOWN)
+        self.assertEqual(WordType.from_string('part'), WordType.PARTICLE)
         
 class TestWords(unittest.TestCase):
         
